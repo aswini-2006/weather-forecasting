@@ -1,22 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Forecast App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skyline &mdash; Weather Forecast</title>
+  <meta name="description" content="A clean, fast weather lookup for any city." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
-<body>
-    <div class="container">
-        <h1>Weather Forecast</h1>
-        <form id="weather-form">
-            <input type="text" id="city" name="city" placeholder="Enter city">
-            <button type="submit">Get Weather</button>
-        </form>
-        <div id="weather-result">
-            <!-- Weather data will be displayed here -->
-        </div>
+<body data-condition="clear" data-daytime="day">
+
+  <div class="sky" aria-hidden="true">
+    <div class="sky__gradient"></div>
+    <div class="sky__stars"></div>
+    <div class="sky__sun-glow"></div>
+    <div class="sky__clouds">
+      <span class="cloud cloud--1"></span>
+      <span class="cloud cloud--2"></span>
+      <span class="cloud cloud--3"></span>
     </div>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <div class="sky__rain"></div>
+    <div class="sky__snow"></div>
+  </div>
+
+  <main class="page">
+    <header class="brand">
+      <span class="brand__mark">&#9728;</span>
+      <span class="brand__name">Skyline</span>
+    </header>
+
+    <section class="card" id="weather-card">
+      <form id="weather-form" class="search" autocomplete="off">
+        <label class="visually-hidden" for="city">City name</label>
+        <input
+          id="city"
+          name="city"
+          type="text"
+          placeholder="Search a city&hellip;"
+          maxlength="100"
+          required
+        />
+        <button type="submit" id="search-btn" aria-label="Get weather">
+          <span class="search__icon" aria-hidden="true">&#8594;</span>
+        </button>
+      </form>
+
+      <div id="status-region" class="status" role="status" aria-live="polite"></div>
+
+      <div id="result" class="result" hidden>
+        <div class="result__top">
+          <div class="result__place">
+            <h1 id="place-name">&mdash;</h1>
+            <p id="place-time" class="result__time"></p>
+          </div>
+          <img id="condition-icon" class="result__icon" alt="" width="72" height="72" />
+        </div>
+
+        <div class="result__hero">
+          <span id="temperature" class="temperature">&mdash;&deg;</span>
+          <span id="description" class="description"></span>
+        </div>
+
+        <dl class="stats">
+          <div class="stats__item">
+            <dt>Feels like</dt>
+            <dd id="feels-like">&mdash;</dd>
+          </div>
+          <div class="stats__item">
+            <dt>Humidity</dt>
+            <dd id="humidity">&mdash;</dd>
+          </div>
+          <div class="stats__item">
+            <dt>Wind</dt>
+            <dd id="wind">&mdash;</dd>
+          </div>
+          <div class="stats__item">
+            <dt>Pressure</dt>
+            <dd id="pressure">&mdash;</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div id="empty-state" class="empty-state">
+        <p>Search for a city to see the current conditions.</p>
+      </div>
+    </section>
+
+    <footer class="footnote">
+      <p>Data from OpenWeatherMap</p>
+    </footer>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
